@@ -180,7 +180,7 @@ similarity = cosine_similarity(vectors)
 def recommend(movie):
     movie_idx = df[df["title"] == movie].index[0]
     dist = similarity[movie_idx]
-    movie_list = sorted(list(enumerate(dist[0])),reverse=True, key=lambda x:x[1])[1:6]
+    movie_list = sorted(list(enumerate(dist)),reverse=True, key=lambda x:x[1])[1:6]
     for i in movie_list:
         print(i[0])
 
