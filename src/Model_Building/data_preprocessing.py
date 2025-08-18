@@ -4,6 +4,7 @@ import ast
 from sklearn.feature_extraction.text import CountVectorizer
 import nltk
 from nltk.stem.porter import PorterStemmer
+from sklearn.metrics.pairwise import cosine_similarity
 
 movies_df = pd.read_csv("./../../data/raw/tmdb_5000_movies.csv")
 
@@ -172,6 +173,14 @@ def stem(text):
 
 # Finally ready with tags column
 df["tags"] = df["tags"].apply(stem)
+
+
+similarity = cosine_similarity(vectors)
+sorted(list(enumerate(similarity[0])),reverse=True, key=lambda x:x[1])
+
+def recommend(movie):
+    movie_idx = df[df["title"] == movie],index[0]
+    dist = similarity[movie_idx]
 
 
 
