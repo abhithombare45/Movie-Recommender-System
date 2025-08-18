@@ -130,5 +130,8 @@ df["overview"] = df["overview"].apply(lambda x: x.split())
 # Now we are removing Space betn the words
 # so we can extracte features correctly without
 # missmatching similar NAME person.
-df["genres"].apply(lambda x: [i.replace(" ", "") for i in x])
+df["genres"] = df["genres"].apply(lambda x: [i.replace(" ", "") for i in x])
+df["keywords"] = df["keywords"].apply(lambda x: [i.replace(" ", "") for i in x])
+df["cast"] = df["cast"].apply(lambda x: [i.replace(" ", "") for i in x])
+df["crew"] = df["crew"].apply(lambda x: [i.replace(" ", "") for i in x])
 df.head(2)
