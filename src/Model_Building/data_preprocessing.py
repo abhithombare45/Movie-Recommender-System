@@ -71,5 +71,28 @@ def convert(obj):
 # genres colunm conversation
 df["genres"] = df["genres"].apply(convert)
 
-for i in range 3: 
-    df.iloc[i].genres
+
+# keywords column converstaion
+df.iloc[0].keywords
+df["keywords"] = df["keywords"].apply(convert)
+
+
+# cast column conversation
+df["cast"][0]
+# we are taking 4 main actor names in consideration
+# so lets create a function to catch names
+def fetch_lead_actor(obj):
+        a_list = []
+        counter = 0
+        for i in ast.literal_eval(obj):
+                if counter != 4:
+                    a_list.append(i['name'])
+                    counter++
+                else:
+                    break
+        return a_list
+
+df["cast"].apply(fetch_lead_actor)
+
+
+df.head(2)
