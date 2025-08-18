@@ -176,11 +176,16 @@ df["tags"] = df["tags"].apply(stem)
 
 
 similarity = cosine_similarity(vectors)
-sorted(list(enumerate(similarity[0])),reverse=True, key=lambda x:x[1])
 
 def recommend(movie):
-    movie_idx = df[df["title"] == movie],index[0]
+    movie_idx = df[df["title"] == movie].index[0]
     dist = similarity[movie_idx]
+    movie_list = sorted(list(enumerate(dist[0])),reverse=True, key=lambda x:x[1])[1:6]
+    for i in movie_list:
+        print(i[0])
+
+recommend('Avatar')
+
 
 
 
