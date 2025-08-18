@@ -179,7 +179,7 @@ df["tags"] = df["tags"].apply(stem)
 # but did not got whole name just first/last 2-3 words 
 # of movies then it should fetch most popular movie
 def find_best_match(movie_name):
-    match = process.extractOne(movie_name, df["title"].tolist())
+    match = process.extractOne(movie_name, df["tags"].tolist())
     if match and match[1] >= 60:
         return match[0]
     return None
@@ -195,37 +195,38 @@ similarity = cosine_similarity(vectors)
 #     movie_ppl_sort = sorted(movie_list, movie_ppl, key=lambda x:[1])
 #     for i in movie_ppl_sort:
 #         print(df.iloc[i[0]].title)
-def recommend(movie):
-    matched_movie = find_best_match(movie)
-    if not matched_movie:
+def recommend(movie_name):
+    # first resolve fuzzy / partial title
+    best_match = find_best_match(movie_name)
+    if not best_match:
         return "No match found."
-    movie_idx = df[df["title"] == matched_movie].index[0]
+    
+    print(f"Best match found: {best_match}")
+    
+    # find index of the resolved title
+    movie_idx = df[df["title"] == best_match].index[0]
     dist = similarity[movie_idx]
-    
-    # top 20 most similar movies (so we have more to sort)
+
+    # top 20 most similar movies
     movie_list = sorted(list(enumerate(dist)), reverse=True, key=lambda x: x[1])[1:21]
-    
-    # Convert to DataFrame for easier sorting
+
     recs = pd.DataFrame(
-        [(idx, df.iloc[idx].title, df.iloc[idx].popularity, df.iloc[idx].release_date) for idx, _ in movie_list],
+        [(idx, df.iloc[idx].title, df.iloc[idx].popularity, df.iloc[idx].release_date) 
+         for idx, _ in movie_list],
         columns=["idx", "title", "popularity", "release_date"]
     )
-    
+
     recs["release_date"] = pd.to_datetime(recs["release_date"], errors="coerce")
-    
-    # Group popularity values within ±100 as similar
     recs["popularity_group"] = (recs["popularity"] // 100)
 
-    # Sort first by popularity_group, then by release_date
-    recs = recs.sort_values(by=["popularity_group", "release_date"], ascending=[False, True])
-    
-    # Get top 5
-    top5 = recs.head(7)
-    
-    return top5[["title", "popularity", "release_date"]]
+    # Sort by popularity_group first, then latest release date
+    recs = recs.sort_values(by=["popularity_group", "release_date"], ascending=[False, False])
+
+    return recs.head(5)[["title", "popularity", "release_date"]]
 
 df.head(1)
 recommend('Harry Potter')
+recommend('Batman')
 df.info()
 
 
