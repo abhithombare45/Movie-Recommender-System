@@ -108,17 +108,11 @@ df["cast"] = df["cast"].apply(fetch_lead_actor)
 df["crew"][0]
 
 
-def fetch_WDP():
+def fetch_WDP(obj):
     n_list = []
     for i in ast.literal_eval(obj):
-        if i["job"] == "Writer":
+        if i["job"] in ["Writer", "Director", "Producer"]:
             n_list.append(i["name"])
-        elif i["job"] == "Director":
-            n_list.append(i["name"])
-        elif i["job"] == "Producer":
-            n_list.append(i["name"])
-        else:
-            break
     return n_list
 
 
