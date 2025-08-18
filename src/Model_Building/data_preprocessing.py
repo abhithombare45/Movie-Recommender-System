@@ -37,6 +37,8 @@ df = df[
     ]
 ]
 
+df.drop(columns=["original_language"], inplace=True)
+
 df.shape
 df.head(1)
 df.info()
@@ -116,7 +118,17 @@ def fetch_WDP(obj):
     return n_list
 
 
-df["crew"].apply(fetch_WDP)
+df["crew"] = df["crew"].apply(fetch_WDP)
+
+# overview column formating
+# column contains a string, we are converting/splitting
+# it into list.
+
+df["overview"] = df["overview"].apply(lambda x: x.split())
 
 
+# Now we are removing Space betn the words
+# so we can extracte features correctly without
+# missmatching similar NAME person.
+df["genres"].apply(lambda x: [i.replace(" ", "") for i in x])
 df.head(2)
