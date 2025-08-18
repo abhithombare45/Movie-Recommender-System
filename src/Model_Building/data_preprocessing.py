@@ -135,3 +135,13 @@ df["keywords"] = df["keywords"].apply(lambda x: [i.replace(" ", "") for i in x])
 df["cast"] = df["cast"].apply(lambda x: [i.replace(" ", "") for i in x])
 df["crew"] = df["crew"].apply(lambda x: [i.replace(" ", "") for i in x])
 df.head(2)
+
+# Now lets create new column that have 
+# all the coulmn data into single one.
+
+df["tags"] = df["genres"] + df["keywords"] + df["cast"] + df["crew"] + df["overview"]
+df.head(1)
+
+df["popularity"].unique()
+max:875
+min 0.000372
