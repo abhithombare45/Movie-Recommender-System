@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-import ast 
+import ast
+
 movies_df = pd.read_csv("./../../data/raw/tmdb_5000_movies.csv")
 
 movies_df.head(1)
@@ -19,22 +20,22 @@ df.info()
 mdict = df
 mdict.shape
 
-df=     df[
-            [
-                "id",
-                "genres",
-                "keywords",
-                "original_language",
-                "title",
-                "overview",
-                "popularity",
-                "release_date",
-                "spoken_languages",
-                "cast",
-                "crew",
-                "status",
-            ]
-        ]
+df = df[
+    [
+        "id",
+        "genres",
+        "keywords",
+        "original_language",
+        "title",
+        "overview",
+        "popularity",
+        "release_date",
+        "spoken_languages",
+        "cast",
+        "crew",
+        "status",
+    ]
+]
 
 df.shape
 df.head(1)
@@ -43,30 +44,34 @@ df.info()
 df.isnull().sum()
 df[df["overview"].isna()]
 df[df["release_date"].isna()]
-# id:overview 370980, 459488, 292539 
+# id:overview 370980, 459488, 292539
 # id:release_date 380097
 
 df.dropna(inplace=True)
 
-df.duplicated().sum() 
+df.duplicated().sum()
 
 ## Sorting Column data
 
 
 df.iloc[0].genres
-# '[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]'    
+# '[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]'
 
-# to work on above output we need 
-# to convert this (JSON) output to list format.  
+# to work on above output we need
+# to convert this (JSON) output to list format.
 
-ast.literal_eval('[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]')
+ast.literal_eval(
+    '[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]'
+)
+
 
 # So modified function accordingly,
 def convert(obj):
-        g_list = []
-        for i in ast.literal_eval(obj):
-                g_list.append(i['name'])
-        return g_list
+    g_list = []
+    for i in ast.literal_eval(obj):
+        g_list.append(i["name"])
+    return g_list
+
 
 # genres colunm conversation
 df["genres"] = df["genres"].apply(convert)
@@ -79,20 +84,32 @@ df["keywords"] = df["keywords"].apply(convert)
 
 # cast column conversation
 df["cast"][0]
+
+
 # we are taking 4 main actor names in consideration
 # so lets create a function to catch names
 def fetch_lead_actor(obj):
-        a_list = []
-        counter = 0
-        for i in ast.literal_eval(obj):
-                if counter != 4:
-                    a_list.append(i['name'])
-                    counter++
-                else:
-                    break
-        return a_list
+    a_list = []
+    counter = 0
+    for i in ast.literal_eval(obj):
+        if counter != 4:
+            a_list.append(i["name"])
+            counter + 1
+        else:
+            break
+    return a_list
 
-df["cast"].apply(fetch_lead_actor)
+
+df["cast"] = df["cast"].apply(fetch_lead_actor)
+
+# crew column conversation
+# We are fetching 3 main names from crew.
+# Writer, Director & Producer (WDP)
+df["crew"][0]
+
+
+def fetcch_WDP():
+    n_list = []
 
 
 df.head(2)
