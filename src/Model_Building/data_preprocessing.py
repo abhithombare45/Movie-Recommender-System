@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-
+import ast 
 movies_df = pd.read_csv("./../../data/raw/tmdb_5000_movies.csv")
 
 movies_df.head(1)
@@ -12,22 +12,64 @@ movies_df.shape
 credits_df.shape
 
 df = movies_df.merge(credits_df, on="title")
+df_test = movies_df.merge(credits_df[["cast", "crew"]], on="title")
 df.head(1)
 
 df.info()
-df[
-    [
-        "id",
-        "genres",
-        "keywords",
-        "original_language",
-        "title",
-        "overview",
-        "popularity",
-        "release_date",
-        "spoken_languages",
-        "cast",
-        "crew",
-        "status",
-    ]
-]
+mdict = df
+mdict.shape
+
+df=     df[
+            [
+                "id",
+                "genres",
+                "keywords",
+                "original_language",
+                "title",
+                "overview",
+                "popularity",
+                "release_date",
+                "spoken_languages",
+                "cast",
+                "crew",
+                "status",
+            ]
+        ]
+
+df.shape
+df.head(1)
+df.info()
+
+df.isnull().sum()
+df[df["overview"].isna()]
+df[df["release_date"].isna()]
+# id:overview 370980, 459488, 292539 
+# id:release_date 380097
+
+df.dropna(inplace=True)
+
+df.duplicated().sum() 
+
+## Sorting Column data
+
+
+df.iloc[0].genres
+# '[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]'    
+
+# to work on above output we need 
+# to convert this (JSON) output to list format.  
+
+ast.literal_eval('[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]')
+
+# So modified function accordingly,
+def convert(obj):
+        g_list = []
+        for i in ast.literal_eval(obj):
+                g_list.append(i['name'])
+        return g_list
+
+# genres colunm conversation
+df["genres"] = df["genres"].apply(convert)
+
+for i in range 3: 
+    df.iloc[i].genres
