@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import ast
+from sklearn.feature_extraction.text import CountVectorizer
+
 
 movies_df = pd.read_csv("./../../data/raw/tmdb_5000_movies.csv")
 
@@ -37,7 +39,7 @@ df = df[
     ]
 ]
 
-df.drop(columns=["original_language"], inplace=True)
+# df.drop(columns=["original_language"], inplace=True)
 
 df.shape
 df.head(1)
@@ -141,7 +143,15 @@ df.head(2)
 
 df["tags"] = df["genres"] + df["keywords"] + df["cast"] + df["crew"] + df["overview"]
 df.head(1)
+# converting tags columns from list to string
+df["tags"] = df["tags"].apply(lambda x:" ".join(x))
+df["tags"][0]
+
+df.info()
+
+
 
 df["popularity"].unique()
+# release_date, spoken_languages
 max:875
 min 0.000372
