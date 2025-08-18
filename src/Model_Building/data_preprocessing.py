@@ -187,28 +187,37 @@ def find_best_match(movie_name):
 
 similarity = cosine_similarity(vectors)
 
-# def recommend(movie):
-#     movie_idx = df[df["title"] == movie].index[0]
-
-#     dist = similarity[movie_idx]
-#     movie_list = sorted(list(enumerate(dist)),reverse=True, key=lambda x:x[1])[1:6]
-#     movie_ppl_sort = sorted(movie_list, movie_ppl, key=lambda x:[1])
-#     for i in movie_ppl_sort:
-#         print(df.iloc[i[0]].title)
 def recommend(movie_name):
-    # first resolve fuzzy / partial title
+    # first resolve fuzzy / partial title using tags
     best_match = find_best_match(movie_name)
-    if not best_match:
-        return "No match found."
-    
-    print(f"Best match found: {best_match}")
-    
-    # find index of the resolved title
-    movie_idx = df[df["title"] == best_match].index[0]
-    dist = similarity[movie_idx]
-
-    # top 20 most similar movies
-    movie_list = sorted(list(enumerate(dist)), reverse=True, key=lambda x: x[1])[1:21]
+    if best_match:
+        print(f"Best match found by tags: {best_match}")
+        movie_idx = df[df["tags"] == best_match].index[0]
+        dist = similarity[movie_idx]
+        movie_list = sorted(list(enumerate(dist)), reverse=True, key=lambda x: x[1])[1:21]
+    else:
+        # fallback: try fuzzy matching against titles
+        title_matches = process.extract(movie_name, df["title"].tolist(), limit=5)
+        title_matches = [match for match in title_matches if match[1] >= 40]
+        if title_matches:
+            print(f"No good tag match found. Best title matches: {[m[0] for m in title_matches]}")
+            movie_list = []
+            for match_title, score in title_matches:
+                idx = df[df["title"] == match_title].index[0]
+                movie_list.append((idx, 1.0))  # score placeholder
+        else:
+            # fallback: recommend top 5 most similar by cosine similarity to any movie with close tag
+            print("No good tag or title match found. Recommending top movies by similarity to closest tag match.")
+            # Find closest tag match with lower threshold
+            matches = process.extract(movie_name, df["tags"].tolist(), limit=1)
+            if matches and matches[0][1] >= 30:
+                movie_idx = df[df["tags"] == matches[0][0]].index[0]
+                dist = similarity[movie_idx]
+                movie_list = sorted(list(enumerate(dist)), reverse=True, key=lambda x: x[1])[1:6]
+            else:
+                # fallback: just top 5 popular movies
+                movie_list = df.sort_values(by="popularity", ascending=False).head(5).index.to_list()
+                movie_list = [(idx, 1.0) for idx in movie_list]
 
     recs = pd.DataFrame(
         [(idx, df.iloc[idx].title, df.iloc[idx].popularity, df.iloc[idx].release_date) 
