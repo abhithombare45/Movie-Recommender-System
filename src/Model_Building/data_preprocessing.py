@@ -179,12 +179,16 @@ similarity = cosine_similarity(vectors)
 
 def recommend(movie):
     movie_idx = df[df["title"] == movie].index[0]
+    movie_ppl = df[df["title"] == movie].index[5]
     dist = similarity[movie_idx]
     movie_list = sorted(list(enumerate(dist)),reverse=True, key=lambda x:x[1])[1:6]
+    movie_ppl_sort = sorted(movie_list, movie_ppl, key=lambda x:[1])
     for i in movie_list:
-        print(i[0])
+        if movie_ppl
+            print(df.iloc[i[0]].title)
 
 recommend('Avatar')
+df.info()
 
 
 
