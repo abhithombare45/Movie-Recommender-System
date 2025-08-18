@@ -1,11 +1,6 @@
 import numpy as np
 import pandas as pd
 import ast
-from sklearn.feature_extraction.text import CountVectorizer
-import nltk
-from nltk.stem.porter import PorterStemmer
-from sklearn.metrics.pairwise import cosine_similarity
-from fuzzywuzzy import process
 
 movies_df = pd.read_csv("./../../data/raw/tmdb_5000_movies.csv")
 
@@ -18,7 +13,7 @@ movies_df.shape
 credits_df.shape
 
 df = movies_df.merge(credits_df, on="title")
-df_test = movies_df.merge(credits_df[["cast", "crew"]], on="title")
+# df_test = movies_df.merge(credits_df[["cast", "crew"]], on="title")
 df.head(1)
 
 df.info()
@@ -30,19 +25,17 @@ df = df[
         "id",
         "genres",
         "keywords",
-        "original_language",
         "title",
         "overview",
         "popularity",
         "release_date",
-        "spoken_languages",
         "cast",
         "crew",
-        "status",
     ]
 ]
 
-# df.drop(columns=["original_language"], inplace=True)
+df.drop(columns=["original_language"], inplace=True)
+df.drop(columns=["spoken_languages"], inplace=True)
 
 df.shape
 df.head(1)
@@ -54,12 +47,14 @@ df[df["release_date"].isna()]
 # id:overview 370980, 459488, 292539
 # id:release_date 380097
 
+# Removing rows with NaN values
 df.dropna(inplace=True)
 
 df.duplicated().sum()
 
-## Sorting Column data
 
+
+## Sorting Column data
 
 df.iloc[0].genres
 # '[{"id": 28, "name": "Action"}, {"id": 12, "name": "Adventure"}, {"id": 14, "name": "Fantasy"}, {"id": 878, "name": "Science Fiction"}]'
@@ -149,6 +144,19 @@ df.head(1)
 # converting tags columns from list to string
 df["tags"] = df["tags"].apply(lambda x:" ".join(x))
 df["tags"][0]
+
+
+df = pd.to_pickle("../../data/processed_data/processed_df.pkl")
+
+
+
+
+
+
+
+
+
+
 
 cv = CountVectorizer(max_features=5000, stop_words="english")
 vectors = cv.fit_transform(df["tags"]).toarray()
