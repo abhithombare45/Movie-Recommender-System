@@ -183,9 +183,8 @@ def recommend(movie):
     dist = similarity[movie_idx]
     movie_list = sorted(list(enumerate(dist)),reverse=True, key=lambda x:x[1])[1:6]
     movie_ppl_sort = sorted(movie_list, movie_ppl, key=lambda x:[1])
-    for i in movie_list:
-        if movie_ppl
-            print(df.iloc[i[0]].title)
+    for i in movie_ppl_sort:
+        print(df.iloc[i[0]].title)
 
 recommend('Avatar')
 df.info()
