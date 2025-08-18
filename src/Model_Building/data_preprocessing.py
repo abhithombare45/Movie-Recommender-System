@@ -2,7 +2,8 @@ import numpy as np
 import pandas as pd
 import ast
 from sklearn.feature_extraction.text import CountVectorizer
-
+import nltk
+from nltk.stem.porter import PorterStemmer
 
 movies_df = pd.read_csv("./../../data/raw/tmdb_5000_movies.csv")
 
@@ -147,7 +148,31 @@ df.head(1)
 df["tags"] = df["tags"].apply(lambda x:" ".join(x))
 df["tags"][0]
 
+cv = CountVectorizer(max_features=5000, stop_words="english")
+vectors = cv.fit_transform(df["tags"]).toarray()
+
+len(cv.get_feature_names_out())
+#5000
+cv.get_feature_names_out()
+# lets check out data
+features = cv.get_feature_names_out().tolist()
+print(features)   # prints all
+# We can see many words have appeared with similar context like 
+# actor is lot similar to actors & many more words..
+# lets install nltk for working onit.
 df.info()
+
+ps = PorterStemmer()
+
+def stem(text):
+    y = []
+    for i in text.split():
+        y.append(ps.stem(i))
+    return " ".join(y)
+
+# Finally ready with tags column
+df["tags"] = df["tags"].apply(stem)
+
 
 
 
