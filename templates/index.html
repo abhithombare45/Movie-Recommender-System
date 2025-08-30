@@ -16,38 +16,6 @@
       <button class="cta" type="submit" id="recommendBtn"><strong>Recommend Movies</strong></button>
     </form>
 
-    <!-- {% if results %}
-      <div class="results">
-        <h2 class="section-title">Recommended</h2>
-        <div class="chips">
-          {% for r in results %}
-            {{ movie_chip(r) }}
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %} -->
-
-    <!-- Adding poster for Trending movies on TMDB  -->
-    <section class="trending">
-      <h2 class="rec-heading">Trending Movies</h2>
-      <div class="movie-grid">
-        {% for m in trending %}
-        <article class="movie-card">
-          {% if m.poster %}
-          <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster">
-          {% else %}
-          <div class="poster placeholder" aria-label="No poster">🎬</div>
-          {% endif %}
-          <div class="movie-meta">
-            <h3 class="movie-title">{{ m.title }}</h3>
-            <p class="movie-year">{{ m.year }}</p>
-          </div>
-        </article>
-        {% endfor %}
-      </div>
-    </section>
-
-
     {% if results %}
     <section class="recommendations">
       <h2 class="rec-heading">Recommended for you</h2>
@@ -58,20 +26,7 @@
           <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster">
           {% else %}
           <div class="poster placeholder" aria-label="No poster">🎬</div>
-          <!-- <img src="{{ url_for('static', filename='./../../assets/icons/placeholder2.jpg') }}" alt="No poster available"
-            class="poster placeholder"> -->
           {% endif %}
-
-          <!-- if poster NA   -->
-          <!-- {% if m.poster %}
-          <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster">
-          {% else %}
-          <img src="{{ url_for('static', filename='./../../static/icons/placeholder2.jpg') }}" alt="No poster available"
-            class="poster placeholder">
-          {% endif %} -->
-          <!-- if poster NA   -->
-
-
           <div class="movie-meta">
             <h3 class="movie-title">{{ m.title }}</h3>
             <p class="movie-year">{{ m.year }}</p>
@@ -84,9 +39,6 @@
       </div>
     </section>
     {% endif %}
-
-
-
 
   </div>
 </section>

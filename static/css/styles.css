@@ -310,3 +310,76 @@ body {
   padding: 18px 0;
   text-align: center;
 }
+
+
+/* additional changes for slider trending poster */
+
+:root {
+  --beige: #f4ede4;
+  --beige-2: #fff7ef;
+  --red: #c62828;
+  --red-dark: #8b1e1e;
+  --ink: #2b2b2b;
+  --white: #ffffff;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+a {
+  text-decoration: none;
+  /* Remove underline globally */
+  color: inherit;
+  /* Inherit color for consistency */
+}
+
+.brand {
+  font-weight: 800;
+  color: var(--red);
+  letter-spacing: 0.6px;
+  text-decoration: none;
+  /* no underline */
+}
+
+.nav-actions a {
+  text-decoration: none;
+  /* no underline for nav buttons */
+}
+
+.ghost-btn {
+  background: transparent;
+  border: 2px solid var(--red);
+  color: var(--red);
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+  text-decoration: none;
+}
+
+.ghost-btn:hover {
+  background: var(--red);
+  color: var(--white);
+  transform: translateY(-1px) scale(1.03);
+}
+
+/* Slider */
+.slider-section {
+  padding: 40px 0 68px;
+  /* reduced from 400px */
+}
+
+.card {
+  min-width: 220px;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 12px;
+  text-align: center;
+}
+
+.card img.poster {
+  width: 100%;
+  aspect-ratio: 2/3;
+  border-radius: 12px;
+  margin-bottom: 6px;
+}
