@@ -1,0 +1,16 @@
+# Ignore big pickle files
+*.pkl
+models/
+data/processed_data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Data
+*.pkl
+data/processed_data/
+models/
+
+
