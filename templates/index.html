@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% from "_macros.html" import movie_chip %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-inner">
+    <h1 class="hero-title">Find Your Next Favorite Movie</h1>
+
+    <!-- Search form -->
+    <form class="search-bar" action="{{ url_for('recommend') }}" method="post" autocomplete="off">
+      <div class="autocomplete" id="autocomplete-root">
+        <input id="searchInput" name="query" type="text" placeholder="Search movies..." value="{{ query or '' }}"
+          aria-label="Search movies" aria-autocomplete="list" aria-controls="suggestions" />
+        <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+      </div>
+      <button class="cta" type="submit" id="recommendBtn"><strong>Recommend Movies</strong></button>
+    </form>
+
+    <!-- {% if results %}
+      <div class="results">
+        <h2 class="section-title">Recommended</h2>
+        <div class="chips">
+          {% for r in results %}
+            {{ movie_chip(r) }}
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %} -->
+
+    <!-- Adding poster for Trending movies on TMDB  -->
+    <section class="trending">
+      <h2 class="rec-heading">Trending Movies</h2>
+      <div class="movie-grid">
+        {% for m in trending %}
+        <article class="movie-card">
+          {% if m.poster %}
+          <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster">
+          {% else %}
+          <div class="poster placeholder" aria-label="No poster">🎬</div>
+          {% endif %}
+          <div class="movie-meta">
+            <h3 class="movie-title">{{ m.title }}</h3>
+            <p class="movie-year">{{ m.year }}</p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+
+    {% if results %}
+    <section class="recommendations">
+      <h2 class="rec-heading">Recommended for you</h2>
+      <div class="movie-grid">
+        {% for m in results %}
+        <article class="movie-card">
+          {% if m.poster %}
+          <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster">
+          {% else %}
+          <div class="poster placeholder" aria-label="No poster">🎬</div>
+          <!-- <img src="{{ url_for('static', filename='./../../assets/icons/placeholder2.jpg') }}" alt="No poster available"
+            class="poster placeholder"> -->
+          {% endif %}
+
+          <!-- if poster NA   -->
+          <!-- {% if m.poster %}
+          <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster">
+          {% else %}
+          <img src="{{ url_for('static', filename='./../../static/icons/placeholder2.jpg') }}" alt="No poster available"
+            class="poster placeholder">
+          {% endif %} -->
+          <!-- if poster NA   -->
+
+
+          <div class="movie-meta">
+            <h3 class="movie-title">{{ m.title }}</h3>
+            <p class="movie-year">{{ m.year }}</p>
+            <p class="movie-overview">
+              {{ (m.overview or '')[:140] }}{% if m.overview and m.overview|length > 140 %}…{% endif %}
+            </p>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+
+
+
+  </div>
+</section>
+{% endblock %}

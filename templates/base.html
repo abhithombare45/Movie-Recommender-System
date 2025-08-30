@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Recommendation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- <div class="brand"> </div> -->
+      <a class="brand" href="https://github.com/abhithombare45/Movie-Recommender-System" target="_blank">ABHIJEET45</a>
+      <nav class="nav-actions">
+        <!-- <button class="ghost-btn">Home</button> -->
+        <a class="ghost-btn" href="{{ url_for('home') }}">Home</a>
+        <button class="ghost-btn">About</button>
+        <!-- <button class="ghost-btn">Contact</button> -->
+        <a class="ghost-btn" href="mailto:your.email@example.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page content -->
+  <main>
+    {% block content %}{% endblock %}
+
+    <!-- Sliding cards section (above footer) -->
+    <section class="slider-section">
+      <div class="container">
+        <h2 class="section-title">Trending Movies</h2>
+        <div class="slider" id="slider">
+          <div class="slides" id="slides">
+            {% for title in trending %}
+            <article class="card" role="group" aria-label="{{ title }}">
+              <div class="card-poster" aria-hidden="true">🎬</div>
+              <h3 class="card-title">{{ title }}</h3>
+            </article>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© {{ current_year }} ABHIJEET45 &nbsp;•&nbsp; &copy; All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+</body>
+
+</html>
