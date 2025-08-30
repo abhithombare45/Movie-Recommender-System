@@ -22,7 +22,7 @@ model_recommend = model_building.recommend  # <-- use this inside app
 
 import requests  # NEW
 import os
-API_KEY = os.getenv("TMDB_API_KEY")
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 # TMDB_API_KEY = "c368f96d723aaf0d7eeb47f79d8c9d91"
 TMDB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
 TMDB_IMG_BASE = "https://image.tmdb.org/t/p/w500"
