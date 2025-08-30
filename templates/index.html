@@ -16,6 +16,16 @@
       <button class="cta" type="submit" id="recommendBtn"><strong>Recommend Movies</strong></button>
     </form>
 
+    <div class="trending-slider">
+      {% for item in trending %}
+      <div class="movie-card">
+        <img src="{{ item.poster }}" alt="{{ item.title }}" onerror="this.src='/assets/icons/placeholder.jpg';">
+        <p>{{ item.title }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+
     {% if results %}
     <section class="recommendations">
       <h2 class="rec-heading">Recommended for you</h2>
