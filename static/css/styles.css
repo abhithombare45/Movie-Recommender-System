@@ -27,9 +27,6 @@ body {
   color: var(--ink);
 }
 
-.section-hero {
-  width: 100%;
-}
 
 .container {
   width: min(1100px, 92%);
