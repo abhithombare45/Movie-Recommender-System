@@ -43,15 +43,14 @@
     {% endif %}
 
     <!-- Trending section should come AFTER recommendations, but always visible -->
-    <div class="trending-slider">
+    <!-- <div class="trending-slider">
       {% for item in trending %}
       <div class="movie-card">
-        <img src="{{ item.poster }}" alt="{{ item.title }}"
-          onerror="this.src='Movie-Recommender-System/static/icons/placeholder.jpg';">
+        <div class="poster placeholder" aria-label="No poster">🎬</div>
         <p>{{ item.title }}</p>
       </div>
       {% endfor %}
-    </div>
+    </div> -->
 
   </div>
 </section>
