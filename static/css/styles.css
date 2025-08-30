@@ -203,10 +203,10 @@ body {
 }
 
 .movie-card {
-  background: #fff;
+  background: red;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
   transition: transform .15s ease, box-shadow .15s ease;
 }
 

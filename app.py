@@ -110,17 +110,16 @@ similarity = data["similarity"]  # cosine similarity matrix
 # -------------------
 @app.get("/")
 def home():
-    trending_movies = list(movies['title'].head(8))
-    trending_with_posters = []
-    for t in trending_movies:
-        poster = tmdb_search(t)
-        trending_with_posters.append({"title": t, "poster": poster})
+    trending_movies = movies.sample(8)  # random trending, or .head(8)
+    trending_results = enrich_with_tmdb(trending_movies)
 
-    return render_template("index.html",
-                           trending=trending_with_posters,
-                           current_year=datetime.datetime.now().year,
-                           results=None,
-                           query="")
+    return render_template(
+        "index.html",
+        trending=trending_results,
+        current_year=datetime.datetime.now().year,
+        results=None,
+        query="",
+    )
 
 
 @app.get("/suggest")
@@ -135,20 +134,18 @@ def suggest():
 @app.post("/recommend")
 def recommend():
     query = request.form.get("query", "").strip()
-    recs = recommend_movies(query, top_n=6)
+    # Use the new fuzzy-aware model_recommend
+    recs_df = model_recommend(query)  # returns DataFrame
+    results = enrich_with_tmdb(recs_df)  # list of dict title/poster/year/overview
+    recs = recs_df["title"].tolist() if not recs_df.empty else []
 
-    # Trending with posters (always available)
-    trending_movies = list(movies['title'].head(8))
-    trending_with_posters = []
-    for t in trending_movies:
-        poster = tmdb_search(t)
-        trending_with_posters.append({"title": t, "poster": poster})
-
-    return render_template("index.html",
-                           trending=trending_with_posters,
-                           current_year=datetime.datetime.now().year,
-                           results=recs,
-                           query=query)
+    return render_template(
+        "index.html",
+        trending=list(movies["title"].head(8)),
+        current_year=datetime.datetime.now().year,
+        results=results,  # <— now list of dicts (not just strings)
+        query=query,
+    )
 
 
 @app.get("/about")
