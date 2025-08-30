@@ -414,13 +414,17 @@ a {
   text-align: center;
 }
 
+/* .hero ul.about-text {
+  
+} */
+
 .hero ul.about-text li:hover {
   list-style: none;
   padding: 0;
   text-align: center;
-  transform: translateY(-1px) scale(1.5);
-  transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+  transform: translateY(-1px) scale(1.2);
   text-shadow: #ff0000;
+  font-size: 1.2rem;
 }
 
 .about-text ul li {
