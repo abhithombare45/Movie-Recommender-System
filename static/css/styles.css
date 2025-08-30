@@ -427,6 +427,12 @@ a {
   font-size: 1.2rem;
 }
 
+
+.hero p:hover {
+  transform: translateY(-1px) scale(1.2);
+  font-size: 1.2rem;
+}
+
 .about-text ul li {
   margin: 6px 0;
   font-size: 0.95rem;
