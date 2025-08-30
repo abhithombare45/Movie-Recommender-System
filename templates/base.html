@@ -12,13 +12,11 @@
   <!-- Header -->
   <header class="site-header">
     <div class="container header-inner">
-      <!-- <div class="brand"> </div> -->
+      <!-- Brand -->
       <a class="brand" href="https://github.com/abhithombare45/Movie-Recommender-System" target="_blank">ABHIJEET45</a>
       <nav class="nav-actions">
-        <!-- <button class="ghost-btn">Home</button> -->
         <a class="ghost-btn" href="{{ url_for('home') }}">Home</a>
-        <button class="ghost-btn">About</button>
-        <!-- <button class="ghost-btn">Contact</button> -->
+        <a class="ghost-btn" href="{{ url_for('about') }}">About</a>
         <a class="ghost-btn" href="mailto:your.email@example.com">Contact</a>
       </nav>
     </div>
@@ -34,10 +32,14 @@
         <h2 class="section-title">Trending Movies</h2>
         <div class="slider" id="slider">
           <div class="slides" id="slides">
-            {% for title in trending %}
-            <article class="card" role="group" aria-label="{{ title }}">
-              <div class="card-poster" aria-hidden="true">🎬</div>
-              <h3 class="card-title">{{ title }}</h3>
+            {% for m in trending %}
+            <article class="card" role="group" aria-label="{{ m.title }}">
+              {% if m.poster %}
+              <img src="{{ m.poster }}" alt="{{ m.title }}" class="poster" />
+              {% else %}
+              <div class="poster placeholder" aria-label="No poster">🎬</div>
+              {% endif %}
+              <h3 class="card-title">{{ m.title }}</h3>
             </article>
             {% endfor %}
           </div>
