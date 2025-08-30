@@ -16,14 +16,6 @@
       <button class="cta" type="submit" id="recommendBtn"><strong>Recommend Movies</strong></button>
     </form>
 
-    <div class="trending-slider">
-      {% for item in trending %}
-      <div class="movie-card">
-        <img src="{{ item.poster }}" alt="{{ item.title }}" onerror="this.src='/assets/icons/placeholder.jpg';">
-        <p>{{ item.title }}</p>
-      </div>
-      {% endfor %}
-    </div>
 
 
     {% if results %}
@@ -49,6 +41,16 @@
       </div>
     </section>
     {% endif %}
+
+    <!-- Trending section should come AFTER recommendations, but always visible -->
+    <div class="trending-slider">
+      {% for item in trending %}
+      <div class="movie-card">
+        <img src="{{ item.poster }}" alt="{{ item.title }}" onerror="this.src='/assets/icons/placeholder.jpg';">
+        <p>{{ item.title }}</p>
+      </div>
+      {% endfor %}
+    </div>
 
   </div>
 </section>
