@@ -204,15 +204,16 @@ body {
 
 .movie-card {
   background: red;
+  color: beige;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.5);
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
 .movie-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
 }
 
 .poster {
@@ -244,14 +245,14 @@ body {
 .movie-year {
   margin: 0 0 6px;
   font-size: .85rem;
-  color: #a33;
+  color: goldenrod;
   font-weight: 600;
 }
 
 .movie-overview {
   margin: 0;
   font-size: .85rem;
-  color: #555;
+  color: beige;
   line-height: 1.3;
 }
 
