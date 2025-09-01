@@ -97,4 +97,4 @@ It uses **content-based filtering** powered by machine learning models to recomm
 ## 📬 Contact
 - 👤 **Author**: Abhijeet Thombare  
 - 🔗 [GitHub](https://github.com/abhithombare45/Movie-Recommender-System)  
-- 🔗 [Hugging Face]([https://huggingface.co/spaces/abhithombare45/Movie-Recommender-System](https://huggingface.co/spaces/abhithombare45/Movie-Recommendation-System))  
+- 🔗 [Hugging Face](https://huggingface.co/spaces/abhithombare45/Movie-Recommendation-System)  
